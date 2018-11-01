@@ -1,8 +1,4 @@
-<%-- 
-    Document   : page2
-    Created on : Sep 26, 2018, 9:37:07 AM
-    Author     : Melnikov
---%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

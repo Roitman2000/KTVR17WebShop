@@ -6,6 +6,8 @@
 package session;
 
 import entity.Customer;
+import entity.Product;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,5 +30,9 @@ public class CustomerFacade extends AbstractFacade<Customer> {
     public CustomerFacade() {
         super(Customer.class);
     }
-    
+    public List<Customer> findActived(boolean active) {
+        return em.createQuery("SELECT c FROM Customer c WHERE c.active = :active AND c.count > 0")
+                .setParameter("active", active)
+                .getResultList();
+    } 
 }

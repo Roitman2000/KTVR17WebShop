@@ -66,8 +66,7 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
             request.getRequestDispatcher(PageReturner.getPage("newProduct")).forward(request, response);
             break;
         case "/addProduct":{
-            String nameProduct= request.getParameter("nameProduct");
-            String yearPublished = request.getParameter("yearPublished");
+            String nameProduct= request.getParameter("name");
             String price = request.getParameter("price");
             String count=request.getParameter("count");
             Product product = new Product(nameProduct, new Integer(price),new Integer(count));
@@ -92,7 +91,7 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
         case "/showProducts":{
             List<Product> listProducts = productFacade.findActived(true);
             request.setAttribute("listProducts", listProducts);
-            request.getRequestDispatcher(PageReturner.getPage("listProduct")).forward(request, response);
+            request.getRequestDispatcher(PageReturner.getPage("listProducts")).forward(request, response);
                 break;
             }
         case "/showCustomer":

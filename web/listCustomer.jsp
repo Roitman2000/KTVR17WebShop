@@ -9,13 +9,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page Shop</title>
+        <title>JSP  Shop</title>
     </head>
     <body>
         <h1 style="font-size: 16px;color:green;">Список покупателей</h1>
         <ul>
             <c:forEach var="customer" items="${listCustomer}">
-                <li>${customer.name} ${customer.surname}</li>
+                <li>${customer.name} ${customer.surname} ${customer.money}</li>
             </c:forEach>
         </ul>
     </body>

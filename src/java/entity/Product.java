@@ -28,15 +28,10 @@ public class Product implements Serializable {
     public Product() {
     }
 
-    public Product(Long Id, String name, Integer price, Integer count) {
-        this.Id = Id;
-        this.name = name;
+    public Product(String nameProduct, Integer price, Integer count) {
+        this.name = nameProduct;
         this.price = price;
         this.count = count;
-    }
-
-    public Product(String nameProduct, Integer integer, Integer integer0) {
-
     }
 
     public Long getId() {

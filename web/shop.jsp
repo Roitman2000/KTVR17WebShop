@@ -13,7 +13,7 @@
             <h2 style="font-size: 16px;color:blue;">Список товаров</h2>
             <select name="selected">
                 <c:forEach var="product" items="${listProducts}">
-                    <option value="${product.id}">${product.nameProduct} ${product.customer}</option>
+                    <option value="${product.id}">${product.name} ${product.price} ${product.count}</option>
                 </c:forEach>
             </select>
                 <h2 style="font-size: 16px;color:green;">Список покупателей</h2>
