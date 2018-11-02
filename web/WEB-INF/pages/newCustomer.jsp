@@ -16,13 +16,13 @@
         <h1>Добавляем в Shop нового покупателя</h1>
         <form action="addCustomer" method="POST" name="form1" id="_form1">
              Имя:<br>
-            <input type="text" name="name"><br>
+            <input type="text" name="name"><br><br>
              Фамилия:<br>
-            <input type="text" name="surname"><br>
+            <input type="text" name="surname"><br><br>
              Деньги:<br>
             <input type="text" name="money"><br>
             <br>
             <input type="submit" value="Добавить">
-        </form><br>
+        </form><br><br>
     </body>
 </html>

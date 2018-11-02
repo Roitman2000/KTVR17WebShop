@@ -14,7 +14,7 @@
     <body>
         <h1 style="font-size: 16px;color:green;">Список покупателей</h1>
         <ul>
-            <c:forEach var="customer" items="${listCustomer}">
+            <c:forEach var="customer" items="${listCustomers}">
                 <li>${customer.name} ${customer.surname} ${customer.money}</li>
             </c:forEach>
         </ul>

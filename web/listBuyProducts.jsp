@@ -16,9 +16,9 @@
         ${info}
         <form action="returnProduct" method="POST">
             <ul>
-                <c:forEach var="purchase" items="${takeproducts}">
+                <c:forEach var="purchase" items="${buyproducts}">
                     <li>Товар: ${purchase.product.name} куплен: ${purchase.customer.name} ${purchase.customer.surname}
-                      <%-- <input type="hidden" value="${purchase.id}" name="returnProductId"><button type="submit">Вернуть продукт</button></li>--%>
+    
                 </c:forEach> 
             </ul>
         </form>

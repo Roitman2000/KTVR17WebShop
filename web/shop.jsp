@@ -9,20 +9,20 @@
     </head>
     <body>
         <h1>Shop</h1>
-        <form  action="takeProduct" method="POST" name="form1">
+        <form  action="buyProduct" method="POST" name="form1">
             <h2 style="font-size: 16px;color:blue;">Список товаров</h2>
             <select name="selected">
                 <c:forEach var="product" items="${listProducts}">
-                    <option value="${product.id}">${product.name} ${product.price} ${product.count}</option>
+                    <option value="${product.id}">${product.name} ${product.price}euro, ${product.count} tk.</option>
                 </c:forEach>
             </select>
                 <h2 style="font-size: 16px;color:green;">Список покупателей</h2>
-            <select name="selectedReader">
-                <c:forEach var="reader" items="${listCustomer}">
+            <select name="selectedCustomer">
+                <c:forEach var="customer" items="${listCustomer}">
                     <option value="${customer.id}">${customer.name} ${customer.surname}${customer.money}</option>
                 </c:forEach>
             </select>
-                <button type="submit" name="takeProduct">Выдать продукт</button>
+                <button type="submit" name="buyProduct">Купить  продукт</button>
         </form>
     </body>
 </html>

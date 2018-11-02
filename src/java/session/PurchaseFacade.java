@@ -31,15 +31,18 @@ public class PurchaseFacade extends AbstractFacade<Purchase> {
         super(Purchase.class);
     }
     
-    public List<Purchase> findTakeProducts(){
-        return em.createQuery("SELECT s FROM Purchase s WHERE s.dateReturn=NULL")
-                .getResultList();
+    
+
+    public List<Purchase> findBuyProduct(Product product) {
+        Object purchase = null;
+       return em.createQuery("SELECT s FROM Purchase s WHERE s.product =:product")
+               .setParameter("product", product)
+               .getResultList();
     }
 
-    public List<Purchase> fineByProduct(Product product) {
-        Object purchase = null;
-       return em.createQuery("SELECT s FROM Purchase s WHERE s.purchase =:purchase").setParameter("purchase", purchase).getResultList();
-    }
+   
+
+   
 
   
     

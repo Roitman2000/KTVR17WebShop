@@ -15,13 +15,13 @@
           <h1>Добавляем в Shop нового продукта</h1>
         <form action="addProduct" method="POST" name="form1" id="_form1">
              Название:<br>
-            <input type="text" name="name"><br>
+            <input type="text" name="name"><br><br>
              Цена товара:<br>
-            <input type="text" name="price"><br>
+            <input type="text" name="price"><br><br>
              Количество товаров:<br>
-            <input type="text" name="count"><br>
+            <input type="text" name="count"><br><br>
             <br>
             <input type="submit" value="Добавить">
-        </form><br>
+        </form><br><br>
     </body>
 </html>

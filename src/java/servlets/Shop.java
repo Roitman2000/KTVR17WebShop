@@ -75,9 +75,10 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
             request.getRequestDispatcher(PageReturner.getPage("welcom")).forward(request, response);
                 break;
             }
-        case "/newCustomer":
+        case "/newCustomer":{
             request.getRequestDispatcher(PageReturner.getPage("newCustomer")).forward(request, response);
             break;
+        }
         case "/addCustomer":{
             String name = request.getParameter("name");
             String surname = request.getParameter("surname");
@@ -89,28 +90,30 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
                 break;
             }
         case "/showProducts":{
-            List<Product> listProducts = productFacade.findActived(true);
+            List<Product> listProducts = productFacade.findExistingProducts();
             request.setAttribute("listProducts", listProducts);
-            request.getRequestDispatcher(PageReturner.getPage("listProducts")).forward(request, response);
+            request.getRequestDispatcher(PageReturner.getPage("listProduct")).forward(request, response);
                 break;
             }
-        case "/showCustomer":
-            List<Customer> listCustomer = customerFacade.findAll();
-            request.setAttribute("listCustomer", listCustomer());
+        case "/showCustomer":{
+            List<Customer> listCustomers = customerFacade.findAll();
+            request.setAttribute("listCustomers", listCustomers);
             request.getRequestDispatcher(PageReturner.getPage("listCustomer")).forward(request, response);
             break;
-        case "/purchase":
-            request.setAttribute("listProducts", productFacade.findActived(true));
-            request.setAttribute("listCustomer", customerFacade.findAll());
-            request.getRequestDispatcher(PageReturner.getPage("takeProduct")).forward(request, response);
+        }
+        case "/purchase":{
+            request.setAttribute("listProducts", productFacade.findAll());
+            request.setAttribute("listCustomers", customerFacade.findAll());
+            request.getRequestDispatcher(PageReturner.getPage("buyProduct")).forward(request, response);
             break;
-        case "/showTakeProduct":{
-            List<Purchase> takeProducts = purchaseFacade.findTakeProducts();
-            request.setAttribute("takeProducts", takeProducts);
-            request.getRequestDispatcher(PageReturner.getPage("listTakeproduct")).forward(request, response);
+        }
+        case "/showBuyProduct":{
+            List<Purchase> buyProducts = purchaseFacade.findAll();
+            request.setAttribute("buyProducts", buyProducts);
+            request.getRequestDispatcher(PageReturner.getPage("listBuyProduct")).forward(request, response);
                 break;
             }
-        case "/takeProduct":{
+        case "/buyProduct":{
             String selectedProduct = request.getParameter("selectedProduct");
             String selectedCustomer = request.getParameter("selectedCustomer");
             Product product = productFacade.find(new Long(selectedProduct));
@@ -125,31 +128,19 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
             }else{
                 request.setAttribute("info", "данного продукта нет на складе");
             }
-            List<Purchase> takeProducts = purchaseFacade.findTakeProducts();
-            request.setAttribute("takeProducts", takeProducts);
-            request.getRequestDispatcher(PageReturner.getPage("listTakeproduct")).forward(request, response);
+            List<Purchase> buyProducts = purchaseFacade.findBuyProduct(product);
+            request.setAttribute("buyProducts", buyProducts);
+            request.getRequestDispatcher(PageReturner.getPage("listBuyProduct")).forward(request, response);
                 break;
             }
-//        case "/returnProduct":{
-//            String returnProductId = request.getParameter("returnproductId");
-//            Purchase purchase = purchaseFacade.find(new Long(returnProductId));
-//            Calendar c = new GregorianCalendar();
-//            purchase.setDateReturn(c.getTime());
-//            purchaseFacade.edit(purchase);
-//            List<Purchase> takePurchases = purchaseFacade.findTakeProducts();
-//            Object takeProducts = null;
-//            request.setAttribute("takeProducts", takeProducts);
-//            request.getRequestDispatcher(PageReturner.getPage("listTakeProduct")).forward(request, response);
-//                break;
-//            }
         case "/deleteProduct":{
             String deleteProductId = request.getParameter("deleteProductId");
             Product product = productFacade.find(new Long(deleteProductId));
             product.setActive(Boolean.FALSE);
             productFacade.edit(product);
-            List<Product> listProducts = productFacade.findActived(true);
+            List<Product> listProducts = productFacade.findAll();
             request.setAttribute("listProducts", listProducts);
-            request.getRequestDispatcher(PageReturner.getPage("listTakeProduct")).forward(request, response);
+            request.getRequestDispatcher(PageReturner.getPage("listBuyProduct")).forward(request, response);
                 break;
             }
         default:

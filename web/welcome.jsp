@@ -10,20 +10,21 @@
     <body>
         <h1>Навигация по сайту</h1>
         ${textToPage}<br>
-        <a href="newProduct">добавить продукт</a><br>
-        <a href="newCustomer">добавить покупателя</a><br>
+        <a href="newProduct">Добавить продукт</a><br>
+        <a href="newCustomer">Добавить покупателя</a><br>
         <a href="showProducts">Список продуктов</a><br>
         <a href="showCustomer">Список покупателей</a><br>
-        <a href="shop">Выдать продукт</a><br>
-        <a href="showTakeProduct">Список купленных товаров</a>
+        <a href="shop">Купить продукт</a><br>
+        <a href="showBuyProduct">Список купленных товаров</a>
         <br>
         Добавлен продукт:<br>
         Название продукта: ${product.name}<br>
-        Цена продукта: ${product.price}
+        Цена продукта: ${product.price}<br>
+        Количество: ${product.count}<br>
         <hr>
         Добавлен покупатель:<br>
         Имя: ${customer.name}<br>
-        Фамилия: ${customer.surname}
-        
+        Фамилия: ${customer.surname}<br>
+        Деньги: ${customer.money}<br>
     </body>
 </html>
