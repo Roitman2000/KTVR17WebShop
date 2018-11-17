@@ -40,6 +40,10 @@ public class PurchaseFacade extends AbstractFacade<Purchase> {
                .getResultList();
     }
 
+    public List<Purchase> findBuyProducts(Product product) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
    
 
    

@@ -35,17 +35,17 @@ import util.PageReturner;
     "/showProducts",
     "/showCustomer",
     "/shop",
-    "/takeProduct",
-    "/showTakeProduct",
-    "/returnProduct",
+    "/buyProduct",
+    "/showBuyProduct",
+    "/listBuyProducts",
     "/deleteProduct",
     })
 
 public class Shop extends HttpServlet {
-@EJB ProductFacade productFacade; 
+@EJB ProductFacade productFacade;
 @EJB CustomerFacade customerFacade;
-@EJB PurchaseFacade purchaseFacade; 
-    
+@EJB PurchaseFacade purchaseFacade;
+
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -104,13 +104,13 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
         case "/purchase":{
             request.setAttribute("listProducts", productFacade.findAll());
             request.setAttribute("listCustomers", customerFacade.findAll());
-            request.getRequestDispatcher(PageReturner.getPage("buyProduct")).forward(request, response);
+            request.getRequestDispatcher(PageReturner.getPage("ListBuyProducts")).forward(request, response);
             break;
         }
         case "/showBuyProduct":{
             List<Purchase> buyProducts = purchaseFacade.findAll();
             request.setAttribute("buyProducts", buyProducts);
-            request.getRequestDispatcher(PageReturner.getPage("listBuyProduct")).forward(request, response);
+            request.getRequestDispatcher(PageReturner.getPage("listBuyProducts")).forward(request, response);
                 break;
             }
         case "/buyProduct":{
@@ -123,14 +123,14 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
             if(product.getCount()>0){
                 product.setCount(product.getCount()-1);
                 productFacade.edit(product);
-                purchase = new Purchase(product, customer, c.getTime(), null); 
+                purchase = new Purchase(product, customer, c.getTime(), null);
                 purchaseFacade.create(purchase);
             }else{
                 request.setAttribute("info", "данного продукта нет на складе");
             }
-            List<Purchase> buyProducts = purchaseFacade.findBuyProduct(product);
+            List<Purchase> buyProducts = purchaseFacade.findBuyProducts(product);
             request.setAttribute("buyProducts", buyProducts);
-            request.getRequestDispatcher(PageReturner.getPage("listBuyProduct")).forward(request, response);
+            request.getRequestDispatcher(PageReturner.getPage("listBuyProducts")).forward(request, response);
                 break;
             }
         case "/deleteProduct":{
@@ -140,7 +140,7 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
             productFacade.edit(product);
             List<Product> listProducts = productFacade.findAll();
             request.setAttribute("listProducts", listProducts);
-            request.getRequestDispatcher(PageReturner.getPage("listBuyProduct")).forward(request, response);
+            request.getRequestDispatcher(PageReturner.getPage("listBuyProducts")).forward(request, response);
                 break;
             }
         default:
@@ -166,7 +166,7 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
 
     @Override
     public void init() throws ServletException {
-        getServletContext().setAttribute("customers", customerFacade.findAll()); 
+        getServletContext().setAttribute("customers", customerFacade.findAll());
     }
 
 
@@ -196,7 +196,7 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
 
     private Object listCustomer() {
     return null;
-      
+
     }
 
 }

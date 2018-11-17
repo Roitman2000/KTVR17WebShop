@@ -1,5 +1,5 @@
 <%-- 
-    Document   : listTakeProducts
+    Document   : listBuyProducts
     Created on : 16-Oct-2018, 21:33:26
     Author     : agloi
 --%>
@@ -12,9 +12,9 @@
         <title>JSP Page Shop</title>
     </head>
     <body>
-           <h1 style="font-size: 16px;color:blue;"Список куплкнных продуктов</h1>
+           <h1 style="font-size: 16px;color:blue;"Список купленных продуктов</h1>
         ${info}
-        <form action="returnProduct" method="POST">
+        <form action="deleteProduct" method="POST">
             <ul>
                 <c:forEach var="purchase" items="${buyproducts}">
                     <li>Товар: ${purchase.product.name} куплен: ${purchase.customer.name} ${purchase.customer.surname}
