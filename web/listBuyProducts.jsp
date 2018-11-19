@@ -9,14 +9,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page Shop</title>
+        <title>Купленный товар</title>
     </head>
     <body>
-           <h1 style="font-size: 16px;color:blue;"Список купленных продуктов</h1>
+           <h1 style="font-size: 16px;color:blue;"Список купленных товаров</h1>
         ${info}
         <form action="deleteProduct" method="POST">
             <ul>
-                <c:forEach var="purchase" items="${buyproducts}">
+                <c:forEach var="purchase" items="${buyProducts}">
                     <li>Товар: ${purchase.product.name} куплен: ${purchase.customer.name} ${purchase.customer.surname}
     
                 </c:forEach> 
