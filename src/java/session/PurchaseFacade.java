@@ -33,21 +33,22 @@ public class PurchaseFacade extends AbstractFacade<Purchase> {
     
     
 
-    public List<Purchase> findBuyProduct(Product product) {
-        Object purchase = null;
+    public List<Purchase> findBuyProducts(Product product) {
+       // Object purchase = null;
        return em.createQuery("SELECT s FROM Purchase s WHERE s.product =:product")
                .setParameter("product", product)
                .getResultList();
     }
 
-    public List<Purchase> findBuyProducts(Product product) {
+    public List<Purchase> findBuyProducts() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+}
+   
    
 
    
 
   
     
-}

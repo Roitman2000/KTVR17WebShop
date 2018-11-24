@@ -6,16 +6,18 @@
 package session;
 
 import entity.Customer;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import secure.UserRoles;
 
 /**
  *
  * @author agloi
  */
 @Stateless
-public class CustomerFacade extends AbstractFacade<Customer> {
+public class UserRolesFacade extends AbstractFacade<UserRoles> {
 
     @PersistenceContext(unitName = "KTVR17WebShopPU")
     private EntityManager em;
@@ -25,13 +27,13 @@ public class CustomerFacade extends AbstractFacade<Customer> {
         return em;
     }
 
-    public CustomerFacade() {
-        super(Customer.class);
+    public UserRolesFacade() {
+        super(UserRoles.class);
     }
 
-    public Customer findByLogin(String login) {
+    public List<UserRoles> findByUser(Customer regUser) {
         return null;
-       
+        
     }
     
 }

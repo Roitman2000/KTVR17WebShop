@@ -5,18 +5,17 @@
  */
 package session;
 
-import entity.Customer;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import secure.*;
 
 /**
  *
  * @author agloi
  */
 @Stateless
-public class CustomerFacade extends AbstractFacade<Customer> {
-
+public class RoleFacade  extends AbstractFacade <Role>{
     @PersistenceContext(unitName = "KTVR17WebShopPU")
     private EntityManager em;
 
@@ -25,13 +24,18 @@ public class CustomerFacade extends AbstractFacade<Customer> {
         return em;
     }
 
-    public CustomerFacade() {
-        super(Customer.class);
+    public RoleFacade() {
+        super(Role.class);
     }
+   
 
-    public Customer findByLogin(String login) {
-        return null;
-       
-    }
+
+    public Role findRoleByName(String name) {
+        return (Role)em.createQuery("SELECT r FROM Role r WHERE r.name=:name")
+        .setParameter("name",name)
+        .getSingleResult();
+
+ }}
+      
     
-}
+

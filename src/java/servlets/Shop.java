@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import session.CustomerFacade;
 import session.ProductFacade;
 import session.PurchaseFacade;
+import util.EncriptPass;
 import util.PageReturner;
 
 /**
@@ -39,6 +40,7 @@ import util.PageReturner;
     "/showBuyProduct",
     "/listBuyProducts",
     "/deleteProduct",
+    "/welcome",
     })
 
 public class Shop extends HttpServlet {
@@ -79,14 +81,25 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
             request.getRequestDispatcher(PageReturner.getPage("newCustomer")).forward(request, response);
             break;
         }
-        case "/addCustomer":{
+  case "/addCustomer":{
             String name = request.getParameter("name");
             String surname = request.getParameter("surname");
             String money = request.getParameter("money");
-            Customer customer = new Customer(name, surname, money);
+            String login = request.getParameter("login");
+            String password1 = request.getParameter("password1");
+            String password2 = request.getParameter("password2");
+            if(!password1.equals(password2)){
+                request.setAttribute("info","Неправильный логин или пароль");
+                request.getRequestDispatcher(PageReturner.getPage("welcome")).forward(request, response);
+                break;
+            }
+            EncriptPass ep = new EncriptPass();
+            String salts = ep.createSalts();
+            String encriptPass = ep.setEncriptPass(password1,salts);
+            Customer customer = new Customer(name, surname, money, login, encriptPass, salts);
             customerFacade.create(customer);
             request.setAttribute("customer", customer);
-            request.getRequestDispatcher(PageReturner.getPage("welcom")).forward(request, response);
+            request.getRequestDispatcher(PageReturner.getPage("welcome")).forward(request, response);
                 break;
             }
         case "/showProducts":{
@@ -101,16 +114,16 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
             request.getRequestDispatcher(PageReturner.getPage("listCustomer")).forward(request, response);
             break;
         }
-        case "/purchase":{
+        case "/shop":{
             request.setAttribute("listProducts", productFacade.findAll());
-            request.setAttribute("listCustomers", customerFacade.findAll());
-            request.getRequestDispatcher(PageReturner.getPage("ListBuyProducts")).forward(request, response);
+            request.setAttribute("listCustomer", customerFacade.findAll());
+            request.getRequestDispatcher(PageReturner.getPage("buyProduct")).forward(request, response);
             break;
         }
         case "/showBuyProduct":{
             List<Purchase> buyProducts = purchaseFacade.findAll();
             request.setAttribute("buyProducts", buyProducts);
-            request.getRequestDispatcher(PageReturner.getPage("listBuyProducts")).forward(request, response);
+            request.getRequestDispatcher(PageReturner.getPage("listBuyProduct")).forward(request, response);
                 break;
             }
         case "/buyProduct":{
@@ -128,23 +141,32 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
             }else{
                 request.setAttribute("info", "данного продукта нет на складе");
             }
-            List<Purchase> buyProducts = purchaseFacade.findBuyProducts(product);
+//            purchase.getCustomer().setMoney(purchase.getCustomer().getMoney()-purchase.getProduct().getPrice()*quantity);
+//             if (purchase.getMoney()<0){
+////                    customer.setMoney(customer.getMoney()-1);
+//                 customerFacade.edit(customer);
+//                purchase = new Purchase(product, customer, c.getTime(), null);
+//                purchaseFacade.create(purchase); 
+//                 }else{
+//               request.setAttribute("info","Извините.У Вас не хватает денег");
+//        }
+                    List<Purchase> buyProducts = purchaseFacade.findBuyProducts();
             request.setAttribute("buyProducts", buyProducts);
-            request.getRequestDispatcher(PageReturner.getPage("listBuyProducts")).forward(request, response);
+            request.getRequestDispatcher(PageReturner.getPage("listBuyProduct")).forward(request, response);
                 break;
             }
         case "/deleteProduct":{
             String deleteProductId = request.getParameter("deleteProductId");
             Product product = productFacade.find(new Long(deleteProductId));
-            product.setActive(Boolean.FALSE);
+//            product.setActive(Boolean.FALSE);
             productFacade.edit(product);
             List<Product> listProducts = productFacade.findAll();
             request.setAttribute("listProducts", listProducts);
-            request.getRequestDispatcher(PageReturner.getPage("listBuyProducts")).forward(request, response);
+            request.getRequestDispatcher(PageReturner.getPage("listBuyProduct")).forward(request, response);
                 break;
             }
         default:
-            request.getRequestDispatcher(PageReturner.getPage("welcom")).forward(request, response);
+            request.getRequestDispatcher(PageReturner.getPage("welcome")).forward(request, response);
             break;
     }
     }
@@ -194,9 +216,5 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
         return "Short description";
     }// </editor-fold>
 
-    private Object listCustomer() {
-    return null;
-
-    }
 
 }

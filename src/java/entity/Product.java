@@ -24,7 +24,8 @@ public class Product implements Serializable {
     private String name;
     private Integer price;
     private Integer count;
-
+//    @Column(unique = true)
+    
     public Product() {
     }
 

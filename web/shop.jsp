@@ -11,7 +11,7 @@
         <h1>Shop</h1>
         <form  action="buyProduct" method="POST" name="form1">
             <h2 style="font-size: 16px;color:blue;">Список товаров</h2>
-            <select name="selected">
+            <select name="selectedProduct">
                 <c:forEach var="product" items="${listProducts}">
                     <option value="${product.id}">${product.name} ${product.price}euro, ${product.count} tk.</option>
                 </c:forEach>

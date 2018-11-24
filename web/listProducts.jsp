@@ -13,10 +13,13 @@
     </head>
     <body>
         <h1 style="font-size: 16px;color:red;"Список продуктов:</h1><br>
+            <ul>
             <c:forEach var="product" items="${listProducts}" varStatus="count">
-                <li>${count.index+1}. ${product.name} ${product.price} euro, ${product.count} tk. </li><br>
+                <li>
+                    ${count.index+1}. ${product.name} ${product.price} euro  ${product.count} tk. </li><br>
                 <a href="deleteProduct?deleteProductId=${product.id}">Удалить</a><br><br>
                 <a href="buyProduct?buyProductId=${product.id}">Купить товар</a><br>
+            <li>
             </c:forEach>
 
         </ul>
