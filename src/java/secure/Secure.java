@@ -194,7 +194,7 @@ public class Secure extends HttpServlet {
         }
     
 
-      // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -204,7 +204,7 @@ public class Secure extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-     public void doGet(HttpServletRequest request = null, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -218,7 +218,7 @@ public class Secure extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-     public void doPost(HttpServletRequest request = null, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -229,8 +229,7 @@ public class Secure extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-     String getServletInfo() {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }}

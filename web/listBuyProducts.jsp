@@ -12,13 +12,15 @@
         <title>Продажа товара Shop</title>
     </head>
     <body>
-           <h1 style="font-size: 16px;color:blue;"Список купленных продуктов</h1>
+           <h1 style="font-size: 16px;color:blue;"Список проданных продуктов</h1>
         ${info}
-        <form action="deleteProduct" method="POST">
+        <form action="Product" method="POST">
             <ul>
-                <c:forEach var="purchase" items="${buyProducts}">
-                    <li>Товар: ${purchase.product.name} куплен: ${purchase.customer.name} ${purchase.customer.surname}
-    
+           <c:forEach var="purchase" items="${buyProducts}">
+                    <li> Продукт <b>"${purchase.product.name}"</b>по цене ${purchase.product.price} euro   - купил <b>
+                                   ${purchase.customer.name} ${purchase.customer.surname} ; </b>в количестве - ${purchase.quantity} штук. &nbsp;&nbsp; 
+                         <a href="returnProduct?purchaseId=${purchase.id}">     Новый продукт</a></li>
+                    </li>  
                 </c:forEach> 
             </ul>
         </form>

@@ -128,19 +128,24 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
             }
         case "/buyProduct":{
             String selectedProduct = request.getParameter("selectedProduct");
+            String selectedCountProduct = request.getParameter("selectedCountProduct");
             String selectedCustomer = request.getParameter("selectedCustomer");
             Product product = productFacade.find(new Long(selectedProduct));
             Customer customer = customerFacade.find(new Long(selectedCustomer));
             Calendar c = new GregorianCalendar();
-            Purchase purchase;
-            if(product.getCount()>0){
-                product.setCount(product.getCount()-1);
-                productFacade.edit(product);
-                purchase = new Purchase(product, customer, c.getTime(), null);
-                purchaseFacade.create(purchase);
-            }else{
-                request.setAttribute("info", "данного продукта нет на складе");
-            }
+//            Purchase purchase;
+                if(product.getCount()>0){
+                    product.setCount(product.getCount()-1);
+                    productFacade.edit(product);
+                    Purchase purchase = new Purchase(product, customer, c.getTime(), null);
+                    purchaseFacade.create(purchase);
+                }else{
+                    request.setAttribute("info", "Товар весь распродан!Ждите нового привоза товара!");
+                }       List<Purchase> buyProducts = purchaseFacade.findByProduct();
+                request.setAttribute("buyProducts", buyProducts);
+                request.getRequestDispatcher("listBuyProduct").forward(request, response);
+                    break;
+                }
 //            purchase.getCustomer().setMoney(purchase.getCustomer().getMoney()-purchase.getProduct().getPrice()*quantity);
 //             if (purchase.getMoney()<0){
 ////                    customer.setMoney(customer.getMoney()-1);
@@ -150,11 +155,19 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
 //                 }else{
 //               request.setAttribute("info","Извините.У Вас не хватает денег");
 //        }
-                    List<Purchase> buyProducts = purchaseFacade.findBuyProducts();
-            request.setAttribute("buyProducts", buyProducts);
-            request.getRequestDispatcher(PageReturner.getPage("listBuyProduct")).forward(request, response);
-                break;
-            }
+        
+            case "/returnProduct":{
+                String purchaseId = request.getParameter("purchaseId");
+                Purchase purchase = purchaseFacade.find(new Long(purchaseId));
+                Calendar c = new GregorianCalendar();
+                purchase.setDateReturn(c.getTime());
+                purchase.getProduct().setCount(purchase.getProduct().getCount()+1);
+                purchaseFacade.edit(purchase);
+                List<Purchase> buyProducts = purchaseFacade.findBuyProduct();
+                request.setAttribute("buyProducts", buyProducts);
+                request.getRequestDispatcher("listBuyProduct").forward(request, response);
+                    break;
+                }
         case "/deleteProduct":{
             String deleteProductId = request.getParameter("deleteProductId");
             Product product = productFacade.find(new Long(deleteProductId));
@@ -170,7 +183,6 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
             break;
     }
     }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -185,12 +197,6 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
-    @Override
-    public void init() throws ServletException {
-        getServletContext().setAttribute("customers", customerFacade.findAll());
-    }
-
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -215,6 +221,5 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 
 }

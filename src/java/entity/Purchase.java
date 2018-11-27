@@ -5,6 +5,7 @@
  */
 package entity;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Entity;
@@ -31,6 +32,8 @@ public class Purchase {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     private Integer quantity;
+      @Temporal(TemporalType.TIMESTAMP)
+    private Date dateReturn;
 
 public Purchase() {
     }
@@ -78,7 +81,13 @@ public Purchase() {
     public void setDate(Date date) {
         this.date = date;
     }
+  public Date getDateReturn() {
+        return dateReturn;
+    }
 
+    public void setDateReturn(Date dateReturn) {
+        this.dateReturn = dateReturn;
+    }
     public Integer getQuantity() {
         return quantity;
     }
@@ -94,6 +103,7 @@ public Purchase() {
         hash = 97 * hash + Objects.hashCode(this.product);
         hash = 97 * hash + Objects.hashCode(this.customer);
         hash = 97 * hash + Objects.hashCode(this.date);
+        hash = 61 * hash + Objects.hashCode(this.dateReturn);
         hash = 97 * hash + Objects.hashCode(this.quantity);
         return hash;
     }
@@ -122,6 +132,9 @@ public Purchase() {
         if (!Objects.equals(this.date, other.date)) {
             return false;
         }
+         if (!Objects.equals(this.dateReturn, other.dateReturn)) {
+            return false;
+        }
         if (!Objects.equals(this.quantity, other.quantity)) {
             return false;
         }
@@ -129,10 +142,17 @@ public Purchase() {
     }
 
     @Override
-    public String toString() {
-        return "Purchase{" + "id=" + id + ", product=" + product + ", customer=" + customer + ", date=" + date + ", quantity=" + quantity + '}';
+//    public String toString() {
+//        return "Purchase{" + "id=" + id + ", product=" + product + ", customer=" + customer + ", date=" + date + ", quantity=" + quantity + '}';
+//    }
+   public String toString() {
+        SimpleDateFormat myformat = new SimpleDateFormat("dd.MM.yyyy");
+        if (dateReturn != null) {
+            return "ПОКУПКА: " + product.toString() + ". Покупатель - " + customer.getName() + " " + customer.getSurname() + ", " + myformat.format(date) + ", " + myformat.format(dateReturn) + ", купил в количестве " + quantity + " шт" + ' ';
+        } else {
+            return "ПОКУПКА: " + product.toString() + ". Покупатель - " + customer.getName() + " " + customer.getSurname() + ", " + myformat.format(date) + ", купил в количестве " + quantity + " шт" + ' ';
+        }
     }
-
   
     
 }

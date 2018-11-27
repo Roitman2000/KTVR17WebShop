@@ -14,7 +14,7 @@
         <a href="newCustomer">Добавить покупателя</a><br><br>
         <a href="showProducts">Список продуктов</a><br><br>
         <a href="showCustomer">Список покупателей</a><br><br>
-        <a href="shop">Купить продукт</a>
+        <a href="shop">Продать товар покупателю</a><br><br>
         <a href="showBuyProduct">Список купленных товаров</a>
         <br>
         Добавлен продукт:<br><br>
