@@ -46,9 +46,7 @@ public Purchase() {
         this.quantity = quantity;
     }
 
-    public Purchase(Product product, Customer customer, Date time, Object object) {
-     
-    }
+   
 
     public Long getId() {
         return id;
