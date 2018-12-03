@@ -115,7 +115,7 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
             break;
         }
         case "/shop":{
-            request.setAttribute("listProducts", productFacade.findAll());
+            request.setAttribute("listProducts", productFacade.findAll());//findActived(true));
             request.setAttribute("listCustomer", customerFacade.findAll());
             request.getRequestDispatcher(PageReturner.getPage("buyProduct")).forward(request, response);
             break;
@@ -136,7 +136,7 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
             if(product.getCount()>0){
                 product.setCount(product.getCount()-1);
                 productFacade.edit(product);
-                purchase = new Purchase(product, customer, c.getTime(), null);
+                Purchare purchase = new Purchase(product, customer, c.getTime(), null, Integer.SIZE);
                 purchaseFacade.create(purchase);
             }else{
                 request.setAttribute("info", "данного продукта нет на складе");
@@ -155,6 +155,18 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
             request.getRequestDispatcher(PageReturner.getPage("listBuyProduct")).forward(request, response);
                 break;
             }
+        case "/returnProduct":{
+                String purchaseId = request.getParameter("purchaseId");
+                Purchase purchase = purchaseFacade.find(new Long(purchaseId));
+                Calendar c = new GregorianCalendar();
+                purchase.setDateReturn(c.getTime());
+                purchase.getProduct().setCount(purchase.getProduct().getCount()+1);
+                purchaseFacade.edit(purchase);
+                List<Purchase> buyProducts = purchaseFacade.findBuyProduct();
+                request.setAttribute("buyProducts", buyProducts);
+                request.getRequestDispatcher("/listBuyProducts.jsp").forward(request, response);
+                    break;
+                }
         case "/deleteProduct":{
             String deleteProductId = request.getParameter("deleteProductId");
             Product product = productFacade.find(new Long(deleteProductId));
