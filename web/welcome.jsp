@@ -10,6 +10,8 @@
     <body>
         <h1>Навигация по сайту</h1>
         ${textToPage}<br>
+         <a href="showLogin">Войти в систему</a><br>
+        <a href="logout">Выйти из системы</a><br>
         <a href="newProduct">Добавить продукт</a><br><br>
         <a href="newCustomer">Добавить покупателя</a><br><br>
         <a href="showProducts">Список продуктов</a><br><br>
@@ -17,6 +19,10 @@
         <a href="shop">Купить продукт</a>
         <a href="showBuyProduct">Список купленных товаров</a>
         <br>
+         <p>Для администратора:</p>
+        
+        <a href="editUsersRoles">Назначение ролей пользователям</a>
+        <br><br>
         Добавлен продукт:<br><br>
         Название продукта: ${product.name}<br>
         Цена продукта: ${product.price}<br>

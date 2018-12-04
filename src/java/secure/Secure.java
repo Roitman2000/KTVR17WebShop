@@ -29,14 +29,14 @@ import util.PageReturner;
  *
  * @author agloi
  */
-@WebServlet(name = "Secure", urlPatterns = {
+@WebServlet(loadOnStartup = 1,name = "Secure", urlPatterns = {
     "/showLogin",
     "/login",
     "/logout",
-    "/newRole",
-    "/addRole",
+//    "/newRole",
+//    "/addRole",
     "/editUsersRole",
-    "/addUserRole",
+//    "/addUserRole",
     "/changeUserRole"})
 public class Secure extends HttpServlet {
 
@@ -54,7 +54,7 @@ public class Secure extends HttpServlet {
             EncriptPass ep = new EncriptPass();
             String salts = ep.createSalts();
             String encriptPass = ep.setEncriptPass("admin",salts);
-            Customer customer = new Customer("Сидор", "Сидоров", "45454545", "К-Ярве", "admin", encriptPass, salts);
+            Customer customer = new Customer("Olga", "Plyuta", "0", "admin", encriptPass, salts);
             customerFacade.create(customer);
             Role role=new Role();
             role.setName("ADMIN");
@@ -71,7 +71,7 @@ public class Secure extends HttpServlet {
         }
     }
 
-    protected String processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF8");
@@ -87,7 +87,7 @@ public class Secure extends HttpServlet {
         }
         SecureLogic sl = new SecureLogic();
 
-        if (null != path) {
+        if (null != path) 
             switch (path) {
                 case "/showLogin":
                     request.getRequestDispatcher(PageReturner.getPage("showLogin")).forward(request, response);
@@ -143,7 +143,7 @@ public class Secure extends HttpServlet {
                     }
                     request.getRequestDispatcher(PageReturner.getPage("showLogin")).forward(request, response);
                     break;
-                case "/editUserRoles":
+                case "/editUsersRoles":
                     if (!"ADMIN".equals(sl.getRole(regUser))) {
                         request.getRequestDispatcher(PageReturner.getPage("showLogin")).forward(request, response);
                         break;
@@ -158,7 +158,7 @@ public class Secure extends HttpServlet {
                     request.setAttribute("mapUsers", mapUsers);
                     List<Role> listRoles = roleFacade.findAll();
                     request.setAttribute("listRoles", listRoles);
-                    request.getRequestDispatcher(PageReturner.getPage("editUserRoles")).forward(request, response);
+                    request.getRequestDispatcher(PageReturner.getPage("editUsersRoles")).forward(request, response);
                     break;
                 case "/changeUserRole":
                     if (!"ADMIN".equals(sl.getRole(regUser))) {
@@ -187,13 +187,15 @@ public class Secure extends HttpServlet {
                     request.setAttribute("mapUsers", mapUsers);
                     List<Role> newlistRoles = roleFacade.findAll();
                     request.setAttribute("listRoles", newlistRoles);
-                    request.getRequestDispatcher(PageReturner.getPage("editUserRoles")).forward(request, response);
+                    request.getRequestDispatcher(PageReturner.getPage("editUsersRoles")).forward(request, response);
                     break;
-                
+                default:
+                    request.getRequestDispatcher(PageReturner.getPage("welcome")).forward(request, response);
+                    break;
             }
-        }
+        
     
-
+    }
       // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -204,7 +206,7 @@ public class Secure extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-     public void doGet(HttpServletRequest request = null, HttpServletResponse response)
+     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -218,7 +220,7 @@ public class Secure extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-     public void doPost(HttpServletRequest request = null, HttpServletResponse response)
+     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -229,8 +231,8 @@ public class Secure extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-     String getServletInfo() {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 
-}}
+}

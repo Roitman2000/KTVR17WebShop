@@ -29,6 +29,8 @@ import util.PageReturner;
  * @author agloi
  */
 @WebServlet(name = "Shop", urlPatterns = {
+    
+     "/ShowLogin",
     "/newProduct",
     "/addProduct",
     "/newCustomer",
@@ -67,6 +69,8 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
         case "/newProduct":
             request.getRequestDispatcher(PageReturner.getPage("newProduct")).forward(request, response);
             break;
+          
+         
         case "/addProduct":{
             String nameProduct= request.getParameter("name");
             String price = request.getParameter("price");
@@ -74,7 +78,7 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
             Product product = new Product(nameProduct, new Integer(price),new Integer(count));
             productFacade.create(product);
             request.setAttribute("product", product);
-            request.getRequestDispatcher(PageReturner.getPage("welcom")).forward(request, response);
+            request.getRequestDispatcher(PageReturner.getPage("welcome")).forward(request, response);
                 break;
             }
         case "/newCustomer":{
@@ -136,7 +140,7 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
             if(product.getCount()>0){
                 product.setCount(product.getCount()-1);
                 productFacade.edit(product);
-                Purchare purchase = new Purchase(product, customer, c.getTime(), null, Integer.SIZE);
+                purchase = new Purchase(product, customer, c.getTime(), null);
                 purchaseFacade.create(purchase);
             }else{
                 request.setAttribute("info", "данного продукта нет на складе");
@@ -150,7 +154,7 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
 //                 }else{
 //               request.setAttribute("info","Извините.У Вас не хватает денег");
 //        }
-                    List<Purchase> buyProducts = purchaseFacade.findBuyProducts(product);
+                    List<Purchase> buyProducts = purchaseFacade.findBuyProducts();
             request.setAttribute("buyProducts", buyProducts);
             request.getRequestDispatcher(PageReturner.getPage("listBuyProduct")).forward(request, response);
                 break;
@@ -162,7 +166,7 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
                 purchase.setDateReturn(c.getTime());
                 purchase.getProduct().setCount(purchase.getProduct().getCount()+1);
                 purchaseFacade.edit(purchase);
-                List<Purchase> buyProducts = purchaseFacade.findBuyProduct();
+                List<Purchase> buyProducts = purchaseFacade.findBuyProducts();
                 request.setAttribute("buyProducts", buyProducts);
                 request.getRequestDispatcher("/listBuyProducts.jsp").forward(request, response);
                     break;
@@ -200,7 +204,7 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
 
     @Override
     public void init() throws ServletException {
-        getServletContext().setAttribute("customers", customerFacade.findAll());
+        getServletContext().setAttribute("customer", customerFacade.findAll());
     }
 
 

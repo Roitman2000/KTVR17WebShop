@@ -33,7 +33,7 @@ public class PurchaseFacade extends AbstractFacade<Purchase> {
     
     
 
-public List<Purchase> findBuyProduct (){
+public List<Purchase> findBuyProducts(){
         return em.createQuery("SELECT p FROM Purchase p WHERE p.dateReturn=NULL").getResultList();
     }
     public List<Purchase> find (Product product){

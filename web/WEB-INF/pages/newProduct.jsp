@@ -9,6 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" <a href="${pageContext.request.contextPath}/css/newProduct.css"></a>
         <title>JSP Page нового продукта</title>
     </head>
     <body>
@@ -23,5 +24,6 @@
             <br>
             <input type="submit" value="Добавить">
         </form><br><br>
+        <script scr="${pageContext.request.contextPath}/js/newProduct.js"></a>
     </body>
 </html>
