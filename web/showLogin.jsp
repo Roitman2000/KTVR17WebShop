@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : ShowLogin
     Created on : Dec 4, 2018, 10:30:35 AM
     Author     : pupil
@@ -12,7 +12,8 @@
         <title>Вход в систему</title>
     </head>
     <body>
-              <h1>Введите логин и пароль</h1>
+
+               <h1>Введите логин и пароль</h1>
         ${info}<br>
         <form action="login" method="POST" name="form1" id="_form1">
              Логин:<br>
@@ -23,6 +24,7 @@
             <br>
             <input type="submit" value="Войти">
         </form><br><br>
-        <a href="newReader">Зарегистрироваться</a>
+        <a href="newCustomer">Зарегистрироваться</a>
+        </form><br>
     </body>
 </html>

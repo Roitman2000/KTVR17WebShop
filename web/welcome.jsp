@@ -9,7 +9,7 @@
     </head>
     <body>
         <h1>Навигация по сайту</h1>
-        ${textToPage}<br>
+        ${info}<br>
          <a href="showLogin">Войти в систему</a><br>
         <a href="logout">Выйти из системы</a><br>
         <a href="newProduct">Добавить продукт</a><br><br>

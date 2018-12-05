@@ -30,7 +30,7 @@ import util.PageReturner;
  */
 @WebServlet(name = "Shop", urlPatterns = {
     
-     "/ShowLogin",
+
     "/newProduct",
     "/addProduct",
     "/newCustomer",
@@ -71,21 +71,22 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
             break;
           
          
-        case "/addProduct":{
+        case "/addProduct":
             String nameProduct= request.getParameter("name");
             String price = request.getParameter("price");
             String count=request.getParameter("count");
             Product product = new Product(nameProduct, new Integer(price),new Integer(count));
             productFacade.create(product);
             request.setAttribute("product", product);
+            request.setAttribute("customer", new Customer());
             request.getRequestDispatcher(PageReturner.getPage("welcome")).forward(request, response);
-                break;
-            }
+            break;
+           
         case "/newCustomer":{
             request.getRequestDispatcher(PageReturner.getPage("newCustomer")).forward(request, response);
             break;
         }
-  case "/addCustomer":{
+        case "/addCustomer":{
             String name = request.getParameter("name");
             String surname = request.getParameter("surname");
             String money = request.getParameter("money");
@@ -103,6 +104,7 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
             Customer customer = new Customer(name, surname, money, login, encriptPass, salts);
             customerFacade.create(customer);
             request.setAttribute("customer", customer);
+            request.setAttribute("product", new Product());
             request.getRequestDispatcher(PageReturner.getPage("welcome")).forward(request, response);
                 break;
             }
@@ -133,7 +135,7 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
         case "/buyProducts":{
             String selectedProduct = request.getParameter("selectedProduct");
             String selectedCustomer = request.getParameter("selectedCustomer");
-            Product product = productFacade.find(new Long(selectedProduct));
+            product = productFacade.find(new Long(selectedProduct));
             Customer customer = customerFacade.find(new Long(selectedCustomer));
             Calendar c = new GregorianCalendar();
             Purchase purchase;
@@ -173,7 +175,7 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
                 }
         case "/deleteProduct":{
             String deleteProductId = request.getParameter("deleteProductId");
-            Product product = productFacade.find(new Long(deleteProductId));
+            product = productFacade.find(new Long(deleteProductId));
 //            product.setActive(Boolean.FALSE);
             productFacade.edit(product);
             List<Product> listProducts = productFacade.findAll();

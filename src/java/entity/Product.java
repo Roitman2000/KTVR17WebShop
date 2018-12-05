@@ -20,7 +20,7 @@ import javax.persistence.Id;
 public class Product implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
     private String name;
     private Integer price;
     private Integer count;
@@ -36,11 +36,11 @@ public class Product implements Serializable {
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long Id) {
-        this.Id = Id;
+        this.id = Id;
     }
 
     public String getName() {
@@ -70,7 +70,7 @@ public class Product implements Serializable {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 31 * hash + Objects.hashCode(this.Id);
+        hash = 31 * hash + Objects.hashCode(this.id);
         hash = 31 * hash + Objects.hashCode(this.name);
         hash = 31 * hash + Objects.hashCode(this.price);
         hash = 31 * hash + Objects.hashCode(this.count);
@@ -92,7 +92,7 @@ public class Product implements Serializable {
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
-        if (!Objects.equals(this.Id, other.Id)) {
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         if (!Objects.equals(this.price, other.price)) {
@@ -106,7 +106,7 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "Product{" + "Id=" + Id + ", name=" + name + ", price=" + price + ", count=" + count + '}';
+        return "Product{" + "Id=" + id + ", name=" + name + ", price=" + price + ", count=" + count + '}';
     }
 
     public void setActive(Boolean FALSE) {

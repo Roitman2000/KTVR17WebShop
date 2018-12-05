@@ -30,8 +30,18 @@ public class CustomerFacade extends AbstractFacade<Customer> {
     }
 
     public Customer findByLogin(String login) {
-        return null;
-       
+     
+        try {
+            return (Customer) em.createQuery("SELECT c FROM Customer c WHERE c.login = :login")
+                .setParameter("login", login)
+                .getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
     }
     
-}
+} 
+    
+       
+
+    

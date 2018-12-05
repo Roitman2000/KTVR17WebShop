@@ -37,5 +37,6 @@ public class ProductFacade extends AbstractFacade<Product> {
     public List<Product> findExistingProducts() {
       return em.createQuery("SELECT p FROM Product p WHERE  p.count > 0")            
                 .getResultList();
+      
     }
 }
