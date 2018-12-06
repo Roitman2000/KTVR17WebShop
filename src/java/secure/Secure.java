@@ -33,10 +33,9 @@ import util.PageReturner;
     "/showLogin",
     "/login",
     "/logout",
-//    "/newRole",
-//    "/addRole",
-    "/editUsersRole",
-//    "/addUserRole",
+
+    "/editUserRoles",
+    "/addUserRole",
     "/changeUserRole"})
 public class Secure extends HttpServlet {
 
@@ -118,37 +117,15 @@ public class Secure extends HttpServlet {
                     request.getRequestDispatcher(PageReturner.getPage("showLogin")).forward(request, response);
                     break;
 
-//                case "/newRole":
-//                    request.getRequestDispatcher(PageReturner.getPage("newRole")).forward(request, response);
-//                    break;
-//
-//                case "/addRole":
-//                    String nameRole = request.getParameter("nameRole");
-//
-//                    Role role = new Role();
-//                    role.setName(nameRole.toUpperCase());
-//                    try {
-//                        if(!role.getName().isEmpty()){//pustaja
-//                        roleFacade.create(role);
-//                    }
-//                    } catch (Exception e) {
-//                        request.setAttribute("info", "Такая роль уже существует");
-//                    }
-//                    request.getRequestDispatcher(PageReturner.getPage("newRole")).forward(request, response);
-//                    break;
-                case "/logout":
-                    if (session != null) {
-                        session.invalidate();
-                        request.setAttribute("info", "До свидания! \n" + regUser.getLogin() + " \n Вы успешно вышли из системы систему!");
-                    }
-                    request.getRequestDispatcher(PageReturner.getPage("showLogin")).forward(request, response);
-                    break;
-                case "/editUsersRoles":
-                    if (!"ADMIN".equals(sl.getRole(regUser))) {
-                        request.getRequestDispatcher(PageReturner.getPage("showLogin")).forward(request, response);
-                        break;
-                    }
+                
 
+                case "/addUserRole":
+                    String roleId = request.getParameter("role");
+                    String userId = request.getParameter("user");
+                    Role role = roleFacade.find(new Long (roleId));
+                    Customer user =customerFacade.find(new Long(userId));
+                    UserRoles ur = new UserRoles(user,role);
+                    sl.addRoleToUser(ur);
                     Map<Customer, String> mapUsers = new HashMap<>();//мар состоит из множества у которых есть уникальные имена Entry 
                     List<Customer> listUsers = customerFacade.findAll();
                     int n = listUsers.size();
@@ -158,7 +135,31 @@ public class Secure extends HttpServlet {
                     request.setAttribute("mapUsers", mapUsers);
                     List<Role> listRoles = roleFacade.findAll();
                     request.setAttribute("listRoles", listRoles);
-                    request.getRequestDispatcher(PageReturner.getPage("editUsersRoles")).forward(request, response);
+                   request.getRequestDispatcher(PageReturner.getPage("editUserRoles")).forward(request, response);
+                   break;
+                case "/logout":
+                    if (session != null) {
+                        session.invalidate();
+                        request.setAttribute("info", "До свидания! \n" + regUser.getLogin() + " \n Вы успешно вышли из системы систему!");
+                    }
+                    request.getRequestDispatcher(PageReturner.getPage("showLogin")).forward(request, response);
+                    break;
+                case "/editUserRoles":
+                    if (!"ADMIN".equals(sl.getRole(regUser))) {
+                        request.getRequestDispatcher(PageReturner.getPage("showLogin")).forward(request, response);
+                        break;
+                    }
+
+                    mapUsers = new HashMap<>();//мар состоит из множества у которых есть уникальные имена Entry 
+                    listUsers = customerFacade.findAll();
+                    n = listUsers.size();
+                    for (int i = 0; i < n; i++) {
+                        mapUsers.put(listUsers.get(i), sl.getRole(listUsers.get(i)));//из листа ридера и передает гетридера
+                    }
+                    request.setAttribute("mapUsers", mapUsers);
+                    listRoles = roleFacade.findAll();
+                    request.setAttribute("listRoles", listRoles);
+                    request.getRequestDispatcher(PageReturner.getPage("editUserRoles")).forward(request, response);
                     break;
                 case "/changeUserRole":
                     if (!"ADMIN".equals(sl.getRole(regUser))) {
@@ -167,11 +168,11 @@ public class Secure extends HttpServlet {
                     }
                     String setButton = request.getParameter("setButton");
                     String deleteButton = request.getParameter("deleteButton");
-                    String userId = request.getParameter("user");
-                    String roleId = request.getParameter("role");
+                    userId = request.getParameter("user");
+                    roleId = request.getParameter("role");
                     Customer customer = customerFacade.find(new Long(userId));
                     Role roleToUser = roleFacade.find(new Long(roleId));
-                    UserRoles ur = new UserRoles(customer, roleToUser);
+                    ur = new UserRoles(customer, roleToUser);
                     if (setButton != null) {
                         sl.addRoleToUser(ur);
                     }
@@ -187,7 +188,7 @@ public class Secure extends HttpServlet {
                     request.setAttribute("mapUsers", mapUsers);
                     List<Role> newlistRoles = roleFacade.findAll();
                     request.setAttribute("listRoles", newlistRoles);
-                    request.getRequestDispatcher(PageReturner.getPage("editUsersRoles")).forward(request, response);
+                    request.getRequestDispatcher(PageReturner.getPage("editUserRoles")).forward(request, response);
                     break;
                 default:
                     request.getRequestDispatcher(PageReturner.getPage("welcome")).forward(request, response);

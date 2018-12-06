@@ -132,7 +132,7 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
             request.getRequestDispatcher(PageReturner.getPage("listBuyProduct")).forward(request, response);
                 break;
             }
-        case "/buyProducts":{
+        case "/buyProduct":{
             String selectedProduct = request.getParameter("selectedProduct");
             String selectedCustomer = request.getParameter("selectedCustomer");
             product = productFacade.find(new Long(selectedProduct));

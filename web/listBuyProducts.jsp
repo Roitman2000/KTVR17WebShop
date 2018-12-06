@@ -22,7 +22,7 @@
                 <c:forEach var="purchase" items="${buyProducts}">
                     <li> Товар <b>"${purchase.product.name}"</b>по цене ${purchase.product.price} euro   - купил <b>
                                    ${purchase.customer.name} ${purchase.customer.surname} ; </b>в количестве - ${purchase.quantity} tk. &nbsp;&nbsp; 
-                         <a href="returnProduct?purchaseId=${purchase.id}">     Посмотреть товар на складе</a></li>
+                         <a href="returnProduct?purchaseId=${purchase.id}"></a></li>
                        
                 </c:forEach> 
             </ul>

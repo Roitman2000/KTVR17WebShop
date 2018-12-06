@@ -16,8 +16,8 @@
             <h1>Назначение ролей</h1>
         <form action="addUserRole" method="POST">
             <select name="user">
-                <c:forEach var="user" items="${listUsers}">
-                    <option value="${user.id}">${user.login}</option>
+                <c:forEach var="entry" items="${mapUsers}">
+                    <option value="${entry.key.id}">${entry.key.login}, роль: ${entry.value}</option>
                 </c:forEach>
 
             </select>

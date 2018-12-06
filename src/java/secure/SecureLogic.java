@@ -55,7 +55,10 @@ private RoleFacade roleFacade;
             userRolesFacade.remove(deleteUserRoles.get(i));
         }
     }
-              public String getRole(Customer regUser){
+    public String getRole(Customer regUser){
+        if (regUser==null){
+          return null;
+        }
         List<UserRoles> listUserRoles = userRolesFacade.findByUser(regUser);
 //        List<Role>listRoles = roleFacade.findAll();
 //        int n = userRoles.size();
