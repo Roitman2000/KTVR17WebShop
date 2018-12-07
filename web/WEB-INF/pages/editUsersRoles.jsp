@@ -11,6 +11,22 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Назначение ролей</title>
+        <style>
+            .input {
+   border: 1px solid #cccccc;
+   border-radius: 3px; 
+   -webkit-border-radius: 3px; 
+   -moz-border-radius: 3px;
+   -khtml-border-radius: 3px; 
+   background: #ffffff !important;
+   outline: none; 
+   height: 24px; 
+   width: 120px;
+   color: #cccccc; 
+   font-size: 11px;
+   font-family: Tahoma; 
+}
+        </style>
     </head>
     <body>
             <h1>Назначение ролей</h1>
@@ -29,6 +45,6 @@
             </select>
             <input type="submit" value="Назначить">
         </form>
-         <a href="welcome">На главную </a>
+        
     </body>
 </html>

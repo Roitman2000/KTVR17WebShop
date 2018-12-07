@@ -14,7 +14,7 @@
 
     </head>
     <body>
-           <h1 style="font-size: 16px;color:blue;">Список купленных товаров</h1>
+           <h1 style="font-size: 16px;color:blue;margin-left: 100px;">Список купленных товаров</h1>
         ${info}
      
          <form action="returnProduct" method="POST">
@@ -27,6 +27,6 @@
                 </c:forEach> 
             </ul>
         </form>
-        <a href="welcome">На главную </a>
+        
     </body>
 </html>
