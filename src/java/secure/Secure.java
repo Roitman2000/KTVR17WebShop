@@ -29,15 +29,14 @@ import util.PageReturner;
  *
  * @author agloi
  */
-@WebServlet(name = "Secure", urlPatterns = {
+@WebServlet(loadOnStartup = 1,name = "Secure", urlPatterns = {
     "/showLogin",
     "/login",
     "/logout",
-    "/newRole",
-    "/addRole",
-    "/editUsersRole",
+
+    "/editUserRoles",
     "/addUserRole",
-    "/changeUserRole",})
+    "/changeUserRole"})
 public class Secure extends HttpServlet {
 
     @EJB
@@ -54,7 +53,7 @@ public class Secure extends HttpServlet {
             EncriptPass ep = new EncriptPass();
             String salts = ep.createSalts();
             String encriptPass = ep.setEncriptPass("admin",salts);
-            Customer customer = new Customer("Сидор", "Сидоров", "45454545", "К-Ярве", "admin", encriptPass, salts);
+            Customer customer = new Customer("Olga", "Plyuta", "0", "admin", encriptPass, salts);
             customerFacade.create(customer);
             Role role=new Role();
             role.setName("ADMIN");
@@ -71,7 +70,7 @@ public class Secure extends HttpServlet {
         }
     }
 
-    protected String processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF8");
@@ -87,7 +86,7 @@ public class Secure extends HttpServlet {
         }
         SecureLogic sl = new SecureLogic();
 
-        if (null != path) {
+        if (null != path) 
             switch (path) {
                 case "/showLogin":
                     request.getRequestDispatcher(PageReturner.getPage("showLogin")).forward(request, response);
@@ -118,24 +117,26 @@ public class Secure extends HttpServlet {
                     request.getRequestDispatcher(PageReturner.getPage("showLogin")).forward(request, response);
                     break;
 
-//                case "/newRole":
-//                    request.getRequestDispatcher(PageReturner.getPage("newRole")).forward(request, response);
-//                    break;
-//
-//                case "/addRole":
-//                    String nameRole = request.getParameter("nameRole");
-//
-//                    Role role = new Role();
-//                    role.setName(nameRole.toUpperCase());
-//                    try {
-//                        if(!role.getName().isEmpty()){//pustaja
-//                        roleFacade.create(role);
-//                    }
-//                    } catch (Exception e) {
-//                        request.setAttribute("info", "Такая роль уже существует");
-//                    }
-//                    request.getRequestDispatcher(PageReturner.getPage("newRole")).forward(request, response);
-//                    break;
+                
+
+                case "/addUserRole":
+                    String roleId = request.getParameter("role");
+                    String userId = request.getParameter("user");
+                    Role role = roleFacade.find(new Long (roleId));
+                    Customer user =customerFacade.find(new Long(userId));
+                    UserRoles ur = new UserRoles(user,role);
+                    sl.addRoleToUser(ur);
+                    Map<Customer, String> mapUsers = new HashMap<>();//мар состоит из множества у которых есть уникальные имена Entry 
+                    List<Customer> listUsers = customerFacade.findAll();
+                    int n = listUsers.size();
+                    for (int i = 0; i < n; i++) {
+                        mapUsers.put(listUsers.get(i), sl.getRole(listUsers.get(i)));//из листа ридера и передает гетридера
+                    }
+                    request.setAttribute("mapUsers", mapUsers);
+                    List<Role> listRoles = roleFacade.findAll();
+                    request.setAttribute("listRoles", listRoles);
+                   request.getRequestDispatcher(PageReturner.getPage("editUserRoles")).forward(request, response);
+                   break;
                 case "/logout":
                     if (session != null) {
                         session.invalidate();
@@ -149,14 +150,14 @@ public class Secure extends HttpServlet {
                         break;
                     }
 
-                    Map<Customer, String> mapUsers = new HashMap<>();//мар состоит из множества у которых есть уникальные имена Entry 
-                    List<Customer> listUsers = customerFacade.findAll();
-                    int n = listUsers.size();
+                    mapUsers = new HashMap<>();//мар состоит из множества у которых есть уникальные имена Entry 
+                    listUsers = customerFacade.findAll();
+                    n = listUsers.size();
                     for (int i = 0; i < n; i++) {
                         mapUsers.put(listUsers.get(i), sl.getRole(listUsers.get(i)));//из листа ридера и передает гетридера
                     }
                     request.setAttribute("mapUsers", mapUsers);
-                    List<Role> listRoles = roleFacade.findAll();
+                    listRoles = roleFacade.findAll();
                     request.setAttribute("listRoles", listRoles);
                     request.getRequestDispatcher(PageReturner.getPage("editUserRoles")).forward(request, response);
                     break;
@@ -167,11 +168,11 @@ public class Secure extends HttpServlet {
                     }
                     String setButton = request.getParameter("setButton");
                     String deleteButton = request.getParameter("deleteButton");
-                    String userId = request.getParameter("user");
-                    String roleId = request.getParameter("role");
+                    userId = request.getParameter("user");
+                    roleId = request.getParameter("role");
                     Customer customer = customerFacade.find(new Long(userId));
                     Role roleToUser = roleFacade.find(new Long(roleId));
-                    UserRoles ur = new UserRoles(customer, roleToUser);
+                    ur = new UserRoles(customer, roleToUser);
                     if (setButton != null) {
                         sl.addRoleToUser(ur);
                     }
@@ -189,12 +190,16 @@ public class Secure extends HttpServlet {
                     request.setAttribute("listRoles", newlistRoles);
                     request.getRequestDispatcher(PageReturner.getPage("editUserRoles")).forward(request, response);
                     break;
-                
+                default:
+                    request.getRequestDispatcher(PageReturner.getPage("welcome")).forward(request, response);
+                    break;
             }
-        }
-    
+        
+    }
 
-     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
+  
+      // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -204,7 +209,7 @@ public class Secure extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -218,7 +223,7 @@ public class Secure extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -232,4 +237,9 @@ public class Secure extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-}}
+
+}
+
+
+
+

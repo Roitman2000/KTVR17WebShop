@@ -31,9 +31,14 @@ public class UserRolesFacade extends AbstractFacade<UserRoles> {
         super(UserRoles.class);
     }
 
-    public List<UserRoles> findByUser(Customer regUser) {
-        return null;
-        
+//    public List<UserRoles> findByUser(Customer regUser) {
+//        return null;
+//        
+//    }
+       public List <UserRoles> findByUser(Customer user) {
+        return em.createQuery("SELECT ur FROM UserRoles ur WHERE ur.customer=:user")
+                .setParameter("user", user)
+                .getResultList();
     }
     
 }

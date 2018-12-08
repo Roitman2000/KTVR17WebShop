@@ -31,22 +31,24 @@ public class Purchase {
     private Customer customer;
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
-    private Integer quantity;
-      @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dateReturn;
+    private Integer quantity;
+   
+
 
 public Purchase() {
     }
 
-    public Purchase(Long id, Product product, Customer customer, Date date, Integer quantity) {
+    public Purchase( Product product, Customer customer, Date date, Integer quantity) {
         this.id = id;
         this.product = product;
         this.customer = customer;
         this.date = date;
+         this.dateReturn = dateReturn;
         this.quantity = quantity;
     }
 
-   
 
     public Long getId() {
         return id;
@@ -86,6 +88,7 @@ public Purchase() {
     public void setDateReturn(Date dateReturn) {
         this.dateReturn = dateReturn;
     }
+
     public Integer getQuantity() {
         return quantity;
     }
@@ -130,7 +133,8 @@ public Purchase() {
         if (!Objects.equals(this.date, other.date)) {
             return false;
         }
-         if (!Objects.equals(this.dateReturn, other.dateReturn)) {
+
+        if (!Objects.equals(this.dateReturn, other.dateReturn)) {
             return false;
         }
         if (!Objects.equals(this.quantity, other.quantity)) {
@@ -139,7 +143,8 @@ public Purchase() {
         return true;
     }
 
-    @Override
+
+
 //    public String toString() {
 //        return "Purchase{" + "id=" + id + ", product=" + product + ", customer=" + customer + ", date=" + date + ", quantity=" + quantity + '}';
 //    }

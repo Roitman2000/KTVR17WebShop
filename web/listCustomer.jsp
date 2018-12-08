@@ -12,8 +12,8 @@
         <title>JSP  Shop</title>
     </head>
     <body>
-        <h1 style="font-size: 16px;color:green;">Список покупателей</h1>
-        <ul>
+        <h1 style="font-size: 16px;color:green;margin-left: 200px;">Список покупателей</h1>
+        <ul style="font-size: 16px;color:blue;margin-left: 100px;">
             <c:forEach var="customer" items="${listCustomers}">
                 <li>${customer.name} ${customer.surname} ${customer.money}</li>
             </c:forEach>

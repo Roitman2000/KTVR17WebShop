@@ -25,16 +25,15 @@ public class Customer implements Serializable {
     private String name; 
     private String surname;
     private String money; 
-    @Column
-     private String login;
+    @Column(unique = true)
+    private String login;
     private String password;
     private String salts;
 
     public Customer() {
     }
 
-    public Customer( String name, String surname, String money, String login, String password, String salts) {
-       
+    public Customer(String name, String surname, String money, String login, String password, String salts) {
         this.name = name;
         this.surname = surname;
         this.money = money;
@@ -43,9 +42,7 @@ public class Customer implements Serializable {
         this.salts = salts;
     }
 
-    public Customer(String сидор, String сидоров, String string, String кЯрве, String admin, String encriptPass, String salts) {
-    
-    }
+
 
     public Long getId() {
         return id;

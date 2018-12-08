@@ -39,20 +39,26 @@ private RoleFacade roleFacade;
             this.deleteRoleToUser(ur.getCustomer());
             userRolesFacade.create(ur);
             Role addNewRole = roleFacade.findRoleByName("USER");
-            UserRoles addedNewRoles=new UserRoles(ur.getCustomer(),addNewRole);
+            UserRoles addedNewRoles = new UserRoles(ur.getCustomer(), addNewRole);
             userRolesFacade.create(addedNewRoles);
-        } else if{(ur.getRole().getName().equals("USER")){
-         userRolesFacade.create(ur);
-}
-        }
-     public void deleteRoleToUser(Customer user){
-            List<UserRoles> deleteUserRoles = userRolesFacade.findByUser(user);
-            int n = deleteUserRoles.size();
-           for(int i=0;i<n;i++){
-               userRolesFacade.remove(deleteUserRoles.get(i));
+        } else if  (ur.getRole().getName().equals("USER")){
+                
+                userRolesFacade.create(ur);
             }
+        
     }
-              public String getRole(Customer regUser){
+
+    public void deleteRoleToUser(Customer user) {
+        List<UserRoles> deleteUserRoles = userRolesFacade.findByUser(user);
+        int n = deleteUserRoles.size();
+        for (int i = 0; i < n; i++) {
+            userRolesFacade.remove(deleteUserRoles.get(i));
+        }
+    }
+    public String getRole(Customer regUser){
+        if (regUser==null){
+          return null;
+        }
         List<UserRoles> listUserRoles = userRolesFacade.findByUser(regUser);
 //        List<Role>listRoles = roleFacade.findAll();
 //        int n = userRoles.size();
@@ -68,7 +74,7 @@ private RoleFacade roleFacade;
                 return listUserRoles.get(i).getRole().getName();
             }
         }
-//            public void deleteRoleToUser(Reader regUser){
+//            public void deleteRoleToUser(Customer regUser){
 //        List<UserRoles> listUserRoles = userRolesFacade.findByUser(user);
 //        int n = listUserRoles.size();
 //        for(int i=0; i<n; i++){

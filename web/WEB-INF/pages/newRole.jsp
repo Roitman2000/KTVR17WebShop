@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Нова роль</title>
+        <title>Новая роль</title>
     </head>
     <body>
           <h1>Добавляем в Shop новую роль</h1>

@@ -1,7 +1,7 @@
-<%-- 
-    Document   : newProduct
-    Created on : 16-Oct-2018, 21:18:29
-    Author     : agloi
+<%--
+    Document   : ShowLogin
+    Created on : Dec 4, 2018, 10:30:35 AM
+    Author     : pupil
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -9,9 +9,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!--<link rel="stylesheet" href="${pageContext.request.contextPath}/css/newProduct.css">-->
-    <title>JSP Page нового продукта</title>
-                 <style>
+        <title>Вход в систему</title>
+                <style>
             input {
  display: inline-block;margin-left: 100px;
   width: 15em;
@@ -34,22 +33,22 @@ select {margin-left: 100px;width: 180px;color:black;border-color: #60a3d8 #2970a
  background: #60a3d8 linear-gradient(#89bbe2, #60a3d8 50%, #378bce);
   box-shadow: inset rgba(255,255,255,.5) 1px 1px;   
 }
-form {margin-left: 100px;}
-        </style> 
+        </style>
     </head>
     <body>
-          <h3 style='margin-left: 100px;color:red;'>Добавляем в Shop нового продукта</h3>
-        <form action="addProduct" method="POST" name="form1" id="_form1">
-             Название:<br>
-            <input type="text" name="name"><br><br>
-             Цена товара:<br>
-            <input type="text" name="price"><br><br>
-             Количество товаров:<br>
-            <input type="text" name="count"><br><br>
+
+               <h3 style='margin-left: 200px;color:red;'>&#128274;Для входа в систему введите ЛОГИН и ПАРОЛЬ</h3>
+        ${info}<br>
+        <form action="login" method="POST" name="form1" id="_form1">
+             Логин:<br>
+            <input type="text" name="login"><br>
             <br>
-            <input type="submit" value="Добавить">
+             Пароль:<br>
+            <input type="password" name="password"><br>
+            <br>
+            <input type="submit" value="Войти">
         </form><br><br>
-       
-        <!-- <script scr="${pageContext.request.contextPath}/js/newProduct.js"></a> -->
+        <a href="newCustomer">&#10148;Зарегистрироваться &#10148;</a>
+        </form><br>
     </body>
 </html>

@@ -30,10 +30,13 @@ public class ProductFacade extends AbstractFacade<Product> {
         super(Product.class);
     }
 
-
+//  public List<Product> findActived(boolean active) {
+//       return em.createQuery("SELECT p FROM Product p WHERE p.active = :active AND p.count > 0" ).setParameter("active", active).getResultList();
+//        }
 
     public List<Product> findExistingProducts() {
       return em.createQuery("SELECT p FROM Product p WHERE  p.count > 0")            
                 .getResultList();
+      
     }
 }

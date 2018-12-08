@@ -12,8 +12,8 @@
         <title>JSP  Shop</title>
     </head>
     <body>
-        <h1 style="font-size: 16px;color:red;"Список продуктов:</h1><br>
-            <ul>
+        <h1 style="font-size: 16px;color:red;margin-left: 200px;">Список продуктов:</h1><br>
+            <ul style="font-size: 16px;color:blue;margin-left: 100px;">
             <c:forEach var="product" items="${listProducts}" >  
                 <li>   ${product.name}, ${product.price} euro - ${product.count} tk.	&nbsp;	&nbsp;
                     <a href="deleteProduct?deleteProductId=${product.id}">  Удалить </a><br> <!--${num.index+1} -->    
