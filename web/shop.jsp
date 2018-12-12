@@ -57,6 +57,12 @@ select {margin-left: 100px;width: 180px;color:black;border-color: #60a3d8 #2970a
                     <option value="${customer.id}">${customer.name} ${customer.surname}${customer.money}</option>
                 </c:forEach>
             </select>
+                 <h2 style="font-size: 16px;color:green;margin-left: 100px;">Количество товара</h2>
+            <select name="selectedProduct">
+                <c:forEach var="guantity" items="${listProduct}">
+                    <option value="${product.id}">${product.name} ${product.surname}${customer.money}${customer.count}</option>
+                </c:forEach>
+            </select>
                 <button type="submit" name="buyProduct">Купить  продукт</button>
         </form>
     </body>

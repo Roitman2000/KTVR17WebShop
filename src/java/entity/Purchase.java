@@ -34,6 +34,7 @@ public class Purchase {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateReturn;
     private Integer quantity;
+    
    
 
 

@@ -143,6 +143,8 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
                 if(product.getCount()>0){
                     product.setCount(product.getCount()-1);
                     productFacade.edit(product);
+//                     purchase.setQuantity(Integer.parseInt(request.getParameter("guantity")));
+//                    purchase.setTotal(purchase.getQuantity()* product.getPrice());
                     purchase = new Purchase(product, customer, c.getTime(), null);
                     purchaseFacade.create(purchase);
                 }else{
