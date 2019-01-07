@@ -34,20 +34,21 @@ public class Purchase {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateReturn;
     private Integer quantity;
-    
+  //  private Long total;
    
 
 
 public Purchase() {
     }
 
-    public Purchase( Product product, Customer customer, Date date, Integer quantity) {
+    public Purchase( Product product, Customer customer, Date date, Integer quantity) {//Long total
         this.id = id;
         this.product = product;
         this.customer = customer;
         this.date = date;
          this.dateReturn = dateReturn;
         this.quantity = quantity;
+       // this.total = total;
     }
 
 
@@ -97,7 +98,9 @@ public Purchase() {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
-
+    //public void setTotal(Long total) {
+     //   this.total = total;
+    //}
     @Override
     public int hashCode() {
         int hash = 7;
@@ -107,8 +110,10 @@ public Purchase() {
         hash = 97 * hash + Objects.hashCode(this.date);
         hash = 61 * hash + Objects.hashCode(this.dateReturn);
         hash = 97 * hash + Objects.hashCode(this.quantity);
+        //hash = 89 * hash + Objects.hashCode(this.total);
         return hash;
     }
+  
 
     @Override
     public boolean equals(Object obj) {
@@ -141,6 +146,9 @@ public Purchase() {
         if (!Objects.equals(this.quantity, other.quantity)) {
             return false;
         }
+       // if (!Objects.equals(this.total, other.total)) {
+        //    return false;
+      //  }
         return true;
     }
 
@@ -155,8 +163,11 @@ public Purchase() {
             return "ПОКУПКА: " + product.toString() + ". Покупатель - " + customer.getName() + " " + customer.getSurname() + ", " + myformat.format(date) + ", " + myformat.format(dateReturn) + ", купил в количестве " + quantity + " шт" + ' ';
         } else {
             return "ПОКУПКА: " + product.toString() + ". Покупатель - " + customer.getName() + " " + customer.getSurname() + ", " + myformat.format(date) + ", купил в количестве " + quantity + " шт" + ' ';
-        }
+        }//   , quantity=" + quantity + ", total=" + total + '     
+
     }
+
+    
   
     
 }
